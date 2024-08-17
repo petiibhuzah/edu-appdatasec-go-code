@@ -2,6 +2,7 @@ package temporalconverters
 
 import (
 	"context"
+	"errors"
 	"time"
 
 	// TODO Part B: Add the `errors` package to your imports.
@@ -26,7 +27,9 @@ func Workflow(ctx workflow.Context, input string) (string, error) {
 
 	err := workflow.ExecuteActivity(ctx, Activity, input).Get(ctx, &result)
 	// TODO Part B: Return an artificial error.
-	if err != nil {
+	// Here original err != nil
+	if err == nil {
+		err = errors.New("this is an artificial error")
 		logger.Error("Activity failed.", "Error", err)
 		return "", err
 	}

@@ -7,7 +7,8 @@ import (
 	temporalconverters "edu-converters-go-code/exercises/custom-converter/practice"
 
 	"go.temporal.io/sdk/client"
-	// TODO Part B: Import "go.temporal.io/sdk/temporal"
+	// TODO Part B: Import
+	"go.temporal.io/sdk/temporal"
 )
 
 func main() {
@@ -16,11 +17,15 @@ func main() {
 		// Set DataConverter here to ensure that workflow inputs and results are
 		// encoded as required.
 		// TODO Part A: Set a `DataConverter` key to use the `DataConverter` from `data_converter.go`.
+		DataConverter: temporalconverters.DataConverter,
 		// This overrides the stock behavior — otherwise, the default data converter will be used.
 		// TODO Part B: Set a `FailureConverter` key to use an instance of
 		// `temporal.NewDefaultFailureConverter` with a single argument,
 		// `temporal.DefaultFailureConverterOptions{}`, and in the options array, set
 		// `EncodeCommonAttributes: true`.
+		FailureConverter: temporal.NewDefaultFailureConverter(temporal.DefaultFailureConverterOptions{
+			EncodeCommonAttributes: true,
+		}),
 	})
 	if err != nil {
 		log.Fatalln("Unable to create client", err)

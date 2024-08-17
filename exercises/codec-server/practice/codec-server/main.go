@@ -10,6 +10,7 @@ import (
 
 	// TODO Part A: Import the `edu_converters_go_code` package used by the other code samples.
 	// Don't forget you can import Go modules from GitHub repos as `modulename url-to-directory`.
+	edu_converters_go_code "edu-converters-go-code/exercises/codec-server/practice"
 
 	"go.temporal.io/sdk/converter"
 	"go.temporal.io/server/common/log"
@@ -80,6 +81,9 @@ func main() {
 	// TODO Part A: Create an array named `codecs` to be used below. Keys should be Namespace strings.
 	// Values should be of the type `converter.PayloadCodec`. By default, you only need to assign the
 	// `default` namespace to {temporalconverters.NewPayloadCodec()} from this example.
+	codecs := map[string][]converter.PayloadCodec{
+		"default": {edu_converters_go_code.NewPayloadCodec()},
+	}
 
 	handler := newPayloadCodecNamespacesHTTPHandler(codecs)
 
